@@ -5,7 +5,7 @@ void Decrypter(char encrypt[]) {
 	int script = strlen(encrypt); 
 	for (int i = 0; i < script; i++) { 
 		encrypt[i] = encrypt[i] ^ key;
-        printf("%c",encrypt[i]);  
+                printf("%c",encrypt[i]);  
 	} 
 } 
 
@@ -14,7 +14,7 @@ int main() {
 	// Decrypt the string 
 	printf('Decrypted String: '); 
 	Decrypter(sampleString);
-    printf('\n'); 
+        printf('\n'); 
 
 	return 0; 
 } 
