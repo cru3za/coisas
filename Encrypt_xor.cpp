@@ -10,11 +10,11 @@ void Decrypter(char encrypt[]) {
 } 
 
 int main() { 
-	char sampleString[] = 'example';
+	char sampleString[] = "example";
 	// Decrypt the string 
-	printf('Decrypted String: '); 
+	printf("Decrypted String: "); 
 	Decrypter(sampleString);
-        printf('\n'); 
+        printf("\n"); 
 
 	return 0; 
 } 
