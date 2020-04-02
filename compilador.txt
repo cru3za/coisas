@@ -1,0 +1,4 @@
+//compilador MingW exe
+i686-w64-mingw32-g++ a.cpp -o a.exe -lws2_32 -lwininet -s -ffunction-sections -fdata-sections -Wno-write-strings -fno-exceptions -fmerge-all-constants -static-libstdc++ -static-libgcc
+
+encurtador.com.br/tKTVY
