@@ -1,7 +1,10 @@
+// Simples criptografia xor
+// author cru3za
+
 #include <iostream>
 #include <string>
 
-using namespace std;
+// using namespace std;
 
 string Decrypter(string EncryptedData, char key[]){
 	string Encrypted = EncryptedData;
@@ -12,7 +15,7 @@ string Decrypter(string EncryptedData, char key[]){
 }
 
 int main(){
-	char key[15] = {'C','R','U',3,'Z','A'};
-	cout << Decrypter("CRU3ZA", key);
+	char key[15] = {'C','R','U',3,'Z','A'}; //Defina as chaves
+	cout << Decrypter("CRU3ZA", key); //Defina o que deseja criptografar
 	return 0;
 }
