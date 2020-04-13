@@ -1,5 +1,5 @@
 // Simples criptografia xor
-// author cru3za
+// author @cru3za
 
 #include<bits/stdc++.h>
 
