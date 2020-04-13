@@ -5,7 +5,7 @@
 
 void Decrypter(char Encrypt_Decrypt[]) { 
     // Chave  
-    char Chave[4] = {1, 9, 9, 3}; 
+    char Chave[6] = {'c','r','u','3','z','a'}; 
     int cru3za = strlen(Encrypt_Decrypt); 
 
     for (int i = 0; i < cru3za; i++){ 
