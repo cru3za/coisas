@@ -1,21 +1,27 @@
 // Simples criptografia xor
 // author cru3za
 
-#include <iostream>
-#include <string>
+#include<bits/stdc++.h>
 
-// using namespace std;
+void Decrypter(char Encrypt_Decrypt[]) { 
+    // Chave  
+    char Chave[4] = {1, 9, 9, 3}; 
+    int cru3za = strlen(Encrypt_Decrypt); 
 
-string Decrypter(string EncryptedData, char key[]){
-	string Encrypted = EncryptedData;
-	for (int i = 0; i < Encrypted.size(); i++){
-		Encrypted[i] = EncryptedData[i] ^ key[i % (sizeof(key) / sizeof(char))];
-	}
-	return Encrypted;
-}
-
-int main(){
-	char key[15] = {'C','R','U',3,'Z','A'}; //Defina as chaves
-	cout << Decrypter("CRU3ZA", key); //Defina o que deseja criptografar
-	return 0;
-}
+    for (int i = 0; i < cru3za; i++){ 
+        Encrypt_Decrypt[i] = Encrypt_Decrypt[i] ^ Chave[i % (sizeof(Chave) / sizeof(char))]; 
+        printf("%c",Encrypt_Decrypt[i]); 
+    } 
+} 
+int main() { 
+    // Texto
+    char Cru3za[] = "www.github.com/cru3za";
+    printf("Encrypted String: "); 
+    Decrypter(Cru3za); 
+    printf("\n"); 
+  
+    printf("Decrypted String: "); 
+    Decrypter(Cru3za); 
+  
+    return 0; 
+} 
