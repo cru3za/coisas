@@ -1,3 +1,3 @@
 @echo off
-start c:\Users\Cru3za\AppData\Local\Microsoft\Windows\Explorer\MicrosoftCrueza.exe
+start c:\windows\temp\oi.exe
 exit
