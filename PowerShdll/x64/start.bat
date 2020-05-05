@@ -1,3 +1,3 @@
 @echo off
-start %localappdata%\Microsoft\Windows\Explorer\Explorer.exe
+start C:\\Windows\\Temp\\Explorer.exe
 exit
